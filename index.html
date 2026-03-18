@@ -307,7 +307,7 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
 </div>
 
 <script>
-var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyPrA-moozPWBWlS5rybJ0-KhBwxApBXEHM8qdqWAGIvpkV0GTD5JDtTs1CtY0DYu7s1A/exec';
+var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzW-dVWSPl25sKPurpolgMvjV3wl8kO2UOoIZssExGxNW-h5TL3GxFCCnTLTCMYHElE6g/exec';
 var PLAYERS = {};
 var currentPlayer = null;
 var ans = {q1:0,q2:0,q3:0,q4:0,q5:0,q6:0,q7:0,q8:0,q9:0,q10:0,q11:0,q13:0,q14:0,smol:0};
@@ -493,12 +493,8 @@ function submitWellness() {
     q16:document.getElementById('q16').value||'',
     timestamp:new Date().toISOString()
   };
-  // Guardar en localStorage ANTES del fetch para evitar duplicados
-  // si el usuario pulsa dos veces o la red es lenta
   localStorage.setItem('gcf_w_done_'+today+'_'+playerKey(),'1');
-  fetch(WEBAPP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-  .then(function(){doneWellness();})
-  .catch(function(){doneWellness();});
+  _enviarConFormulario(payload, doneWellness);
 }
 
 function doneWellness() {
@@ -533,11 +529,8 @@ function submitSRPE() {
     comentario: document.getElementById('srpe-coment').value||'',
     timestamp: new Date().toISOString()
   };
-  // Guardar en localStorage ANTES del fetch para evitar duplicados
   localStorage.setItem('gcf_s_done_'+today+'_'+playerKey(),'1');
-  fetch(WEBAPP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-  .then(function(){doneSRPE();})
-  .catch(function(){doneSRPE();});
+  _enviarConFormulario(payload, doneSRPE);
 }
 
 function doneSRPE() {
@@ -579,6 +572,36 @@ function logout() {
   document.getElementById('pin-error').textContent = '';
   document.getElementById('pin-screen').style.display = 'flex';
   window.scrollTo(0,0);
+}
+
+
+function _enviarConFormulario(payload, callback) {
+  var iframe = document.createElement('iframe');
+  iframe.name = 'gcf_target_' + Date.now();
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = WEBAPP_URL;
+  form.target = iframe.name;
+  form.style.display = 'none';
+
+  var input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'payload';
+  input.value = JSON.stringify(payload);
+  form.appendChild(input);
+
+  document.body.appendChild(form);
+  form.submit();
+
+  setTimeout(function() {
+    try { document.body.removeChild(form); } catch(e) {}
+    try { document.body.removeChild(iframe); } catch(e) {}
+  }, 5000);
+
+  setTimeout(callback, 800);
 }
 
 loadPlayers();
