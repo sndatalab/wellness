@@ -307,7 +307,7 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
 </div>
 
 <script>
-var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxiWHrFHm25UZSuw77zgP0Gnnre33jlqiyjCtGQBUHdZHNIRu7qQBQhMo_sa4XLcUxZoQ/exec';
+var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwvBJlsC4nI_rRT2k1lwJhMOdcQsfqO2ELMlNjHkMX4lzndjgylWLKsRArjQq797M5bMQ/exec';
 var PLAYERS = {};
 var currentPlayer = null;
 var ans = {q1:0,q2:0,q3:0,q4:0,q5:0,q6:0,q7:0,q8:0,q9:0,q10:0,q11:0,q13:0,q14:0,smol:0};
@@ -576,32 +576,18 @@ function logout() {
 
 
 function _enviarConFormulario(payload, callback) {
-  var iframe = document.createElement('iframe');
-  iframe.name = 'gcf_target_' + Date.now();
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
-
-  var form = document.createElement('form');
-  form.method = 'POST';
-  form.action = WEBAPP_URL;
-  form.target = iframe.name;
-  form.style.display = 'none';
-
-  var input = document.createElement('input');
-  input.type = 'hidden';
-  input.name = 'payload';
-  input.value = JSON.stringify(payload);
-  form.appendChild(input);
-
-  document.body.appendChild(form);
-  form.submit();
-
-  setTimeout(function() {
-    try { document.body.removeChild(form); } catch(e) {}
-    try { document.body.removeChild(iframe); } catch(e) {}
-  }, 5000);
-
-  setTimeout(callback, 800);
+  // Encode payload as URL params and send via GET to avoid CORB
+  var params = Object.keys(payload).map(function(k) {
+    var v = payload[k];
+    if (Array.isArray(v)) v = v.join(';');
+    return encodeURIComponent(k) + '=' + encodeURIComponent(v == null ? '' : v);
+  }).join('&');
+  var url = WEBAPP_URL + '?' + params;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.onreadystatechange = function() {};
+  xhr.send();
+  setTimeout(callback, 1000);
 }
 
 loadPlayers();
