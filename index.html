@@ -260,20 +260,39 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
       <button class="mode-btn active" onclick="goMode('srpe')">💪 Valorar entrenamiento</button>
     </div>
     <div class="block">
-      <div class="block-header"><div class="block-icon" style="background:#E8F4FD;">💪</div><div style="flex:1;"><div class="block-title" style="color:#1A5276;">Esfuerzo percibido — Borg CR-10</div><div class="block-sub">¿Cómo fue el esfuerzo total de la sesión?</div></div></div>
+      <div class="block-header"><div class="block-icon" style="background:#E8F5E9;">🏋️</div><div style="flex:1;"><div class="block-title" style="color:#1B5E20;">sRPE Gimnasio</div><div class="block-sub">¿Cómo fue el esfuerzo de la sesión de gym?</div></div></div>
       <div class="block-body">
-        <div><div class="q-hint">Piensa en el esfuerzo TOTAL de todo el entrenamiento, no en momentos puntuales.</div>
-          <div class="srpe-list">
-            <div class="srpe-row" onclick="selSRPE(this,1)"><div class="srpe-num" style="background:#1D9E75;">1</div><div><div style="font-size:13px;font-weight:600;">Muy, muy fácil</div><div style="font-size:11px;color:var(--gray);">Paseo sin esfuerzo</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,2)"><div class="srpe-num" style="background:#27AE60;">2</div><div><div style="font-size:13px;font-weight:600;">Fácil</div><div style="font-size:11px;color:var(--gray);">Calentamiento suave</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,3)"><div class="srpe-num" style="background:#97C459;">3</div><div><div style="font-size:13px;font-weight:600;">Moderado</div><div style="font-size:11px;color:var(--gray);">Charla técnica, rondos</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,4)"><div class="srpe-num" style="background:#EF9F27;">4</div><div><div style="font-size:13px;font-weight:600;">Algo duro</div><div style="font-size:11px;color:var(--gray);">Trabajo técnico-táctico normal</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,5)"><div class="srpe-num" style="background:#E67E22;">5</div><div><div style="font-size:13px;font-weight:600;">Duro</div><div style="font-size:11px;color:var(--gray);">Partido de entrenamiento normal</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,6)"><div class="srpe-num" style="background:#E67E22;">6</div><div><div style="font-size:13px;font-weight:600;">Duro+</div><div style="font-size:11px;color:var(--gray);">Trabajo físico con balón, pressing</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,7)"><div class="srpe-num" style="background:#E74C3C;">7</div><div><div style="font-size:13px;font-weight:600;">Muy duro</div><div style="font-size:11px;color:var(--gray);">Series de sprint, alta intensidad</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,8)"><div class="srpe-num" style="background:#C0392B;">8</div><div><div style="font-size:13px;font-weight:600;">Muy muy duro</div><div style="font-size:11px;color:var(--gray);">Intervalos máximos, partido competitivo</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,9)"><div class="srpe-num" style="background:#922B21;">9</div><div><div style="font-size:13px;font-weight:600;">Casi máximo</div><div style="font-size:11px;color:var(--gray);">Test físico o doble sesión</div></div></div>
-            <div class="srpe-row" onclick="selSRPE(this,10)"><div class="srpe-num" style="background:#7B241C;">10</div><div><div style="font-size:13px;font-weight:600;">Máximo esfuerzo</div><div style="font-size:11px;color:var(--gray);">Nunca has entrenado tan duro</div></div></div>
+        <div><div class="q-hint">Valora el esfuerzo percibido durante la sesión de gimnasio de hoy.</div>
+          <div class="srpe-list" id="srpe-gym-list">
+            <div class="srpe-row" onclick="selSRPEGym(this,1)"><div class="srpe-num" style="background:#1D9E75;">1</div><div><div style="font-size:13px;font-weight:600;">Muy, muy fácil</div><div style="font-size:11px;color:var(--gray);">Paseo sin esfuerzo</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,2)"><div class="srpe-num" style="background:#27AE60;">2</div><div><div style="font-size:13px;font-weight:600;">Fácil</div><div style="font-size:11px;color:var(--gray);">Calentamiento suave</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,3)"><div class="srpe-num" style="background:#97C459;">3</div><div><div style="font-size:13px;font-weight:600;">Moderado</div><div style="font-size:11px;color:var(--gray);">Charla técnica, rondos</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,4)"><div class="srpe-num" style="background:#EF9F27;">4</div><div><div style="font-size:13px;font-weight:600;">Algo duro</div><div style="font-size:11px;color:var(--gray);">Trabajo técnico-táctico normal</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,5)"><div class="srpe-num" style="background:#E67E22;">5</div><div><div style="font-size:13px;font-weight:600;">Duro</div><div style="font-size:11px;color:var(--gray);">Partido de entrenamiento normal</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,6)"><div class="srpe-num" style="background:#E67E22;">6</div><div><div style="font-size:13px;font-weight:600;">Duro+</div><div style="font-size:11px;color:var(--gray);">Trabajo físico con balón, pressing</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,7)"><div class="srpe-num" style="background:#E74C3C;">7</div><div><div style="font-size:13px;font-weight:600;">Muy duro</div><div style="font-size:11px;color:var(--gray);">Series de sprint, alta intensidad</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,8)"><div class="srpe-num" style="background:#C0392B;">8</div><div><div style="font-size:13px;font-weight:600;">Muy muy duro</div><div style="font-size:11px;color:var(--gray);">Intervalos máximos, partido competitivo</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,9)"><div class="srpe-num" style="background:#922B21;">9</div><div><div style="font-size:13px;font-weight:600;">Casi máximo</div><div style="font-size:11px;color:var(--gray);">Test físico o doble sesión</div></div></div>
+            <div class="srpe-row" onclick="selSRPEGym(this,10)"><div class="srpe-num" style="background:#7B241C;">10</div><div><div style="font-size:13px;font-weight:600;">Máximo esfuerzo</div><div style="font-size:11px;color:var(--gray);">Nunca has entrenado tan duro</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="block-header"><div class="block-icon" style="background:#E8F4FD;">⚽</div><div style="flex:1;"><div class="block-title" style="color:#1A5276;">sRPE Campo</div><div class="block-sub">¿Cómo fue el esfuerzo del entrenamiento de campo?</div></div></div>
+      <div class="block-body">
+        <div><div class="q-hint">Valora el esfuerzo percibido durante el entrenamiento de campo.</div>
+          <div class="srpe-list" id="srpe-campo-list">
+            <div class="srpe-row" onclick="selSRPECampo(this,1)"><div class="srpe-num" style="background:#1D9E75;">1</div><div><div style="font-size:13px;font-weight:600;">Muy, muy fácil</div><div style="font-size:11px;color:var(--gray);">Paseo sin esfuerzo</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,2)"><div class="srpe-num" style="background:#27AE60;">2</div><div><div style="font-size:13px;font-weight:600;">Fácil</div><div style="font-size:11px;color:var(--gray);">Calentamiento suave</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,3)"><div class="srpe-num" style="background:#97C459;">3</div><div><div style="font-size:13px;font-weight:600;">Moderado</div><div style="font-size:11px;color:var(--gray);">Charla técnica, rondos</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,4)"><div class="srpe-num" style="background:#EF9F27;">4</div><div><div style="font-size:13px;font-weight:600;">Algo duro</div><div style="font-size:11px;color:var(--gray);">Trabajo técnico-táctico normal</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,5)"><div class="srpe-num" style="background:#E67E22;">5</div><div><div style="font-size:13px;font-weight:600;">Duro</div><div style="font-size:11px;color:var(--gray);">Partido de entrenamiento normal</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,6)"><div class="srpe-num" style="background:#E67E22;">6</div><div><div style="font-size:13px;font-weight:600;">Duro+</div><div style="font-size:11px;color:var(--gray);">Trabajo físico con balón, pressing</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,7)"><div class="srpe-num" style="background:#E74C3C;">7</div><div><div style="font-size:13px;font-weight:600;">Muy duro</div><div style="font-size:11px;color:var(--gray);">Series de sprint, alta intensidad</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,8)"><div class="srpe-num" style="background:#C0392B;">8</div><div><div style="font-size:13px;font-weight:600;">Muy muy duro</div><div style="font-size:11px;color:var(--gray);">Intervalos máximos, partido competitivo</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,9)"><div class="srpe-num" style="background:#922B21;">9</div><div><div style="font-size:13px;font-weight:600;">Casi máximo</div><div style="font-size:11px;color:var(--gray);">Test físico o doble sesión</div></div></div>
+            <div class="srpe-row" onclick="selSRPECampo(this,10)"><div class="srpe-num" style="background:#7B241C;">10</div><div><div style="font-size:13px;font-weight:600;">Máximo esfuerzo</div><div style="font-size:11px;color:var(--gray);">Nunca has entrenado tan duro</div></div></div>
           </div>
         </div>
       </div>
@@ -313,6 +332,8 @@ var currentPlayer = null;
 var ans = {q1:0,q2:0,q3:0,q4:0,q5:0,q6:0,q7:0,q8:0,q9:0,q10:0,q11:0,q13:0,q14:0,smol:0};
 var SCORE_KEYS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q13','q14'];
 var srpeVal = 0;
+var srpeGymVal = 0;
+var srpeCampoVal = 0;
 var today = new Date().toISOString().substring(0,10);
 
 // ── KEY por jugadora usando NOMBRE (no email) ─────────
@@ -463,6 +484,18 @@ function selSRPE(row, val) {
   srpeVal = val;
 }
 
+function selSRPEGym(row, val) {
+  document.querySelectorAll('#srpe-gym-list .srpe-row').forEach(function(r){r.classList.remove('sel');});
+  row.classList.add('sel');
+  srpeGymVal = val;
+}
+
+function selSRPECampo(row, val) {
+  document.querySelectorAll('#srpe-campo-list .srpe-row').forEach(function(r){r.classList.remove('sel');});
+  row.classList.add('sel');
+  srpeCampoVal = val;
+}
+
 function updateProgress() {
   var done = SCORE_KEYS.filter(function(k){return ans[k]>0;}).length;
   var pct  = Math.round(done/SCORE_KEYS.length*100);
@@ -518,7 +551,8 @@ function doneWellness() {
 var sendingSRPE = false;
 function submitSRPE() {
   if (sendingSRPE) return;
-  if (!srpeVal) { toast('Selecciona el nivel de esfuerzo'); return; }
+  if (!srpeGymVal) { toast('Selecciona el esfuerzo del gimnasio'); return; }
+  if (!srpeCampoVal) { toast('Selecciona el esfuerzo del campo'); return; }
   if (!ans.smol) { toast('Indica si tuviste molestias'); return; }
   sendingSRPE = true;
   var btn = document.getElementById('s-submit-btn');
@@ -527,7 +561,8 @@ function submitSRPE() {
     action:'submitSRPE',
     name:  currentPlayer?currentPlayer.name:'',
     email: currentPlayer?currentPlayer.email:'',
-    srpe:  String(srpeVal),
+    srpe_campo: String(srpeCampoVal),
+    srpe_gym:   String(srpeGymVal),
     molestia: ans.smol,
     zona: document.getElementById('zona-srpe').value||'',
     comentario: document.getElementById('srpe-coment').value||'',
@@ -543,15 +578,14 @@ function submitSRPE() {
 function doneSRPE() {
   document.getElementById('srpe-screen').style.display='none';
   document.getElementById('confirm-screen').classList.add('show');
-  var ua = srpeVal * 90;
-  var col = srpeVal<=4?'#1D9E75':(srpeVal<=7?'#E67E22':'#C0392B');
+  var col = srpeCampoVal<=4?"#1D9E75":(srpeCampoVal<=7?"#E67E22":"#C0392B");
   document.getElementById('c-icon').textContent='💪';
   document.getElementById('c-title').textContent='¡Valoración enviada!';
   if(currentPlayer) document.getElementById('c-text').innerHTML='Buen trabajo, <strong>'+currentPlayer.name.split(' ')[0]+'</strong>! Buena recuperación.';
-  document.getElementById('c-card-icon').textContent=srpeVal<=4?'🟢':(srpeVal<=7?'🟡':'🔴');
+  document.getElementById('c-card-icon').textContent=srpeCampoVal<=4?'🟢':(srpeCampoVal<=7?'🟡':'🔴');
   document.getElementById('c-card-title').style.color=col;
-  document.getElementById('c-card-title').textContent='sRPE '+srpeVal+'/10 registrado';
-  document.getElementById('c-card-sub').textContent='Carga estimada: '+srpeVal+' × 90 min = '+ua+' UA';
+  document.getElementById('c-card-title').textContent='sRPE Campo '+srpeCampoVal+'/10 · Gym '+srpeGymVal+'/10';
+  document.getElementById('c-card-sub').textContent='Campo: '+srpeCampoVal+'/10 · Gym: '+srpeGymVal+'/10';
   document.getElementById('c-footer').textContent='';
   window.scrollTo(0,0);
 }
