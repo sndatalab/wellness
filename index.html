@@ -399,21 +399,33 @@ function enterApp() {
   document.getElementById('w-player-chip').textContent = name;
   document.getElementById('s-player-chip').textContent = name;
 
+  // Consultar al script si ya respondió hoy
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', WEBAPP_URL + '?action=checkDone&name=' + encodeURIComponent(currentPlayer ? currentPlayer.name : '') + '&v=' + Date.now(), true);
+  xhr.onload = function() {
+    try {
+      var d = JSON.parse(xhr.responseText);
+      if (d.wellnessDone) localStorage.setItem('gcf_w_done_' + today + '_' + playerKey(), '1');
+      if (d.srpeDone)    localStorage.setItem('gcf_s_done_' + today + '_' + playerKey(), '1');
+    } catch(e) {}
+    _decidirPantalla();
+  };
+  xhr.onerror = function() { _decidirPantalla(); };
+  xhr.send();
+}
+
+function _decidirPantalla() {
   var donePRE  = localStorage.getItem('gcf_w_done_' + today + '_' + playerKey());
   var doneSRPE = localStorage.getItem('gcf_s_done_' + today + '_' + playerKey());
   var hour = new Date().getHours();
 
   if (donePRE && doneSRPE) {
-    // Ambos hechos — mostrar el que corresponde por hora
     if (hour >= 15) { showDoneSRPE(); } else { showDone(); }
   } else if (donePRE) {
-    // Wellness hecho, sRPE pendiente
     if (hour >= 15) { goMode('srpe'); } else { showDone(); }
   } else if (doneSRPE) {
-    // sRPE hecho, wellness pendiente (poco probable pero posible)
     goMode('wellness');
   } else {
-    // Ninguno hecho — detectar por hora
     goMode(hour >= 15 ? 'srpe' : 'wellness');
   }
 }
