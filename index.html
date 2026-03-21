@@ -214,7 +214,7 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
       <div class="block-body">
         <div><div class="q-label">14. Nivel de dolor o molestia hoy</div><div class="scale-buttons" data-q="q14"><button class="scale-btn s5" onclick="selScale(this,'q14')" data-v="1">1</button><button class="scale-btn s4" onclick="selScale(this,'q14')" data-v="2">2</button><button class="scale-btn s3" onclick="selScale(this,'q14')" data-v="3">3</button><button class="scale-btn s2" onclick="selScale(this,'q14')" data-v="4">4</button><button class="scale-btn s1" onclick="selScale(this,'q14')" data-v="5">5</button></div><div class="scale-ends"><span>Sin molestias</span><span>Dolor severo</span></div></div>
         <div id="zona-wrap" style="display:none;"><div class="q-label">15. Zona afectada</div><input type="text" class="text-input" id="q15" placeholder="Ej: Rodilla derecha — crujido al bajar escaleras"></div>
-        <div><div class="q-label">16. Comentario para el staff <span style="font-weight:400;color:var(--gray);font-size:12px;">(opcional)</span></div><textarea class="text-input" id="q16" rows="3" placeholder="Situación personal, viaje, algo del último entreno..."></textarea></div>
+        <div><div class="q-label">16. Comentario para el staff <span style="font-weight:400;color:var(--gray);font-size:12px;">(opcional)</span></div><textarea class="text-input" id="q16" rows="3" placeholder="Comenta lo que sea necesario para que el staff reciba toda la información."></textarea></div>
       </div>
     </div>
     <div style="padding:8px 0 0;">
@@ -260,7 +260,7 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
       <button class="mode-btn active" onclick="goMode('srpe')">💪 Valorar entrenamiento</button>
     </div>
     <div class="block">
-      <div class="block-header"><div class="block-icon" style="background:#E8F5E9;">🏋️</div><div style="flex:1;"><div class="block-title" style="color:#1B5E20;">sRPE Gimnasio</div><div class="block-sub">¿Cómo fue el esfuerzo de la sesión de gym?</div></div></div>
+      <div class="block-header"><div class="block-icon" style="background:#E8F5E9;">🏋️</div><div style="flex:1;"><div class="block-title" style="color:#1B5E20;">RPE Gimnasio</div><div class="block-sub">¿Cómo fue el esfuerzo de la sesión de gym?</div></div></div>
       <div class="block-body">
         <div><div class="q-hint">Valora el esfuerzo percibido durante la sesión de gimnasio de hoy.</div>
           <div class="srpe-list" id="srpe-gym-list">
@@ -279,7 +279,7 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
       </div>
     </div>
     <div class="block">
-      <div class="block-header"><div class="block-icon" style="background:#E8F4FD;">⚽</div><div style="flex:1;"><div class="block-title" style="color:#1A5276;">sRPE Campo</div><div class="block-sub">¿Cómo fue el esfuerzo del entrenamiento de campo?</div></div></div>
+      <div class="block-header"><div class="block-icon" style="background:#E8F4FD;">⚽</div><div style="flex:1;"><div class="block-title" style="color:#1A5276;">RPE Campo</div><div class="block-sub">¿Cómo fue el esfuerzo del entrenamiento de campo?</div></div></div>
       <div class="block-body">
         <div><div class="q-hint">Valora el esfuerzo percibido durante el entrenamiento de campo.</div>
           <div class="srpe-list" id="srpe-campo-list">
@@ -458,8 +458,8 @@ function selScale(btn, key) {
   btn.closest('[data-q]').querySelectorAll('.scale-btn').forEach(function(b){b.classList.remove('sel');});
   btn.classList.add('sel');
   ans[key] = parseInt(btn.dataset.v);
-  if (key==='q14') document.getElementById('zona-wrap').style.display = ans.q14>=4?'block':'none';
-  if (key==='smol') document.getElementById('zona-srpe-wrap').style.display = ans.smol>=4?'block':'none';
+  if (key==='q14') document.getElementById('zona-wrap').style.display = ans.q14>=3?'block':'none';
+  if (key==='smol') document.getElementById('zona-srpe-wrap').style.display = ans.smol>=3?'block':'none';
   updateProgress();
 }
 
