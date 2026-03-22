@@ -466,6 +466,10 @@ function showDone() {
   document.getElementById('done-screen').classList.add('show');
   if (currentPlayer) document.getElementById('done-text').innerHTML =
     'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>Recuerda valorar el entrenamiento después del entreno.';
+  var btnSRPE = document.querySelector('#done-screen .fp-btn');
+  if (btnSRPE) btnSRPE.style.display = diaDescanso ? 'none' : '';
+  var txtSRPE = document.querySelector('#done-screen .fp-btn + div');
+  if (txtSRPE) txtSRPE.style.display = diaDescanso ? 'none' : '';
   window.scrollTo(0,0);
 }
 
@@ -474,10 +478,6 @@ function showDoneSRPE() {
   document.getElementById('srpe-screen').style.display      = 'none';
   document.getElementById('done-screen').classList.remove('show');
   document.getElementById('done-srpe-screen').classList.add('show');
-  var btnSRPE = document.querySelector('#done-screen .fp-btn');
-  if (btnSRPE) btnSRPE.style.display = diaDescanso ? 'none' : '';
-  var txtSRPE = document.querySelector('#done-screen .fp-btn + div');
-  if (txtSRPE) txtSRPE.style.display = diaDescanso ? 'none' : '';
   if (currentPlayer) document.getElementById('done-srpe-text').innerHTML =
     'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya valoraste el entrenamiento de hoy.';
   window.scrollTo(0,0);
