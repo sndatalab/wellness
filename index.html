@@ -157,7 +157,7 @@ textarea.text-input{resize:none;min-height:80px;line-height:1.5;}
       <button class="mode-btn active" onclick="goMode('wellness')">🛌 Wellness pre-entreno</button>
       <button class="mode-btn" onclick="goMode('srpe')">💪 Valorar entrenamiento</button>
     </div>
-    <div class="limit-notice">⏰ Completa este formulario <strong>antes del entrenamiento de hoy</strong>. El staff lo recibe al instante.</div>
+    <div class="limit-notice" id="limit-notice">⏰ Completa este formulario <strong>antes del entrenamiento de hoy</strong>. El staff lo recibe al instante.</div>
     <div class="block">
       <div class="block-header"><div class="block-icon" style="background:#E8F4FD;">🛌</div><div style="flex:1;"><div class="block-title" style="color:#1A5276;">Recuperación física</div><div class="block-sub">Sueño, fatiga y disponibilidad</div></div><div class="block-pts">25 pts</div></div>
       <div class="block-body">
@@ -450,9 +450,14 @@ function goMode(mode) {
   document.querySelectorAll('.mode-btn').forEach(function(b, i) {
     if (i === 1) b.style.display = diaDescanso ? 'none' : '';
   });
+
   if (mode === 'wellness') {
     if (localStorage.getItem('gcf_w_done_' + today + '_' + playerKey())) { showDone(); return; }
     document.getElementById('wellness-screen').style.display = 'block';
+    var notice = document.getElementById('limit-notice');
+    if (notice) notice.innerHTML = diaDescanso
+      ? '🛌 Hoy es día de descanso. Completa el wellness para que el staff conozca tu estado.'
+      : '⏰ Completa este formulario <strong>antes del entrenamiento de hoy</strong>. El staff lo recibe al instante.';
   } else {
     if (localStorage.getItem('gcf_s_done_' + today + '_' + playerKey())) { showDoneSRPE(); return; }
     document.getElementById('srpe-screen').style.display = 'block';
@@ -464,8 +469,9 @@ function showDone() {
   document.getElementById('wellness-screen').style.display = 'none';
   document.getElementById('srpe-screen').style.display     = 'none';
   document.getElementById('done-screen').classList.add('show');
-  if (currentPlayer) document.getElementById('done-text').innerHTML =
-    'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>Recuerda valorar el entrenamiento después del entreno.';
+  if (currentPlayer) document.getElementById('done-text').innerHTML = diaDescanso
+    ? 'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>¡Descansa bien! 💤'
+    : 'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>Recuerda valorar el entrenamiento después del entreno.';
   var btnSRPE = document.getElementById('btn-valorar');
   if (btnSRPE) btnSRPE.style.display = diaDescanso ? 'none' : '';
   var txtSRPE = document.getElementById('txt-valorar');
