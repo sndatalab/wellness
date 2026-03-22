@@ -471,6 +471,10 @@ function showDoneSRPE() {
   document.getElementById('srpe-screen').style.display      = 'none';
   document.getElementById('done-screen').classList.remove('show');
   document.getElementById('done-srpe-screen').classList.add('show');
+  var btnSRPE = document.querySelector('#done-screen .fp-btn');
+  if (btnSRPE) btnSRPE.style.display = diaDescanso ? 'none' : '';
+  var txtSRPE = document.querySelector('#done-screen .fp-btn + div');
+  if (txtSRPE) txtSRPE.style.display = diaDescanso ? 'none' : '';
   if (currentPlayer) document.getElementById('done-srpe-text').innerHTML =
     'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya valoraste el entrenamiento de hoy.';
   window.scrollTo(0,0);
@@ -557,6 +561,10 @@ function submitWellness() {
 function doneWellness() {
   document.getElementById('wellness-screen').style.display='none';
   document.getElementById('confirm-screen').classList.add('show');
+  if (diaDescanso) {
+    document.getElementById('c-footer').textContent='¡Buen descanso! 💤';
+    return;
+  }
   document.getElementById('c-icon').textContent='✅';
   document.getElementById('c-title').textContent='¡Wellness enviado!';
   if(currentPlayer) document.getElementById('c-text').innerHTML='Buen trabajo, <strong>'+currentPlayer.name.split(' ')[0]+'</strong>! El staff lo ha recibido. 💪';
