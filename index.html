@@ -335,7 +335,7 @@ var srpeVal = 0;
 var srpeGymVal = 0;
 var srpeCampoVal = 0;
 var today = new Date().toISOString().substring(0,10);
-var diaDescanso = false;
+var diaDescanso = localStorage.getItem('gcf_descanso_' + new Date().toISOString().substring(0,10)) === '1';
 
 // ── KEY por jugadora usando NOMBRE (no email) ─────────
 // Esto garantiza que cada jugadora tenga su propio registro
@@ -408,7 +408,10 @@ function enterApp() {
       var d = JSON.parse(xhr.responseText);
       if (d.wellnessDone) localStorage.setItem('gcf_w_done_' + today + '_' + playerKey(), '1');
       if (d.srpeDone)    localStorage.setItem('gcf_s_done_' + today + '_' + playerKey(), '1');
-      if (d.diaDescanso) diaDescanso = true;
+      if (d.diaDescanso) {
+        diaDescanso = true;
+        localStorage.setItem('gcf_descanso_' + today, '1');
+      }
     } catch(e) {}
     _decidirPantalla();
   };
