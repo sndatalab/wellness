@@ -335,6 +335,7 @@ var srpeVal = 0;
 var srpeGymVal = 0;
 var srpeCampoVal = 0;
 var today = new Date().toISOString().substring(0,10);
+var diaDescanso = false;
 
 // ── KEY por jugadora usando NOMBRE (no email) ─────────
 // Esto garantiza que cada jugadora tenga su propio registro
@@ -407,6 +408,7 @@ function enterApp() {
       var d = JSON.parse(xhr.responseText);
       if (d.wellnessDone) localStorage.setItem('gcf_w_done_' + today + '_' + playerKey(), '1');
       if (d.srpeDone)    localStorage.setItem('gcf_s_done_' + today + '_' + playerKey(), '1');
+      if (d.diaDescanso) diaDescanso = true;
     } catch(e) {}
     _decidirPantalla();
   };
@@ -419,6 +421,10 @@ function _decidirPantalla() {
   var doneSRPE = localStorage.getItem('gcf_s_done_' + today + '_' + playerKey());
   var hour = new Date().getHours();
 
+  if (diaDescanso) {
+    if (donePRE) { showDone(); } else { goMode('wellness'); }
+    return;
+  }
   if (donePRE && doneSRPE) {
     if (hour >= 15) { showDoneSRPE(); } else { showDone(); }
   } else if (donePRE) {
@@ -436,7 +442,11 @@ function goMode(mode) {
   document.getElementById('done-screen').classList.remove('show');
   document.getElementById('done-srpe-screen').classList.remove('show');
   document.getElementById('confirm-screen').classList.remove('show');
-
+  
+  // Ocultar pestaña sRPE en días de descanso
+  document.querySelectorAll('.mode-btn').forEach(function(b, i) {
+    if (i === 1) b.style.display = diaDescanso ? 'none' : '';
+  });
   if (mode === 'wellness') {
     if (localStorage.getItem('gcf_w_done_' + today + '_' + playerKey())) { showDone(); return; }
     document.getElementById('wellness-screen').style.display = 'block';
