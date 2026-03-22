@@ -470,8 +470,8 @@ function showDone() {
   document.getElementById('srpe-screen').style.display     = 'none';
   document.getElementById('done-screen').classList.add('show');
   if (currentPlayer) document.getElementById('done-text').innerHTML = diaDescanso
-    ? 'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>¡Descansa bien! 💤'
-    : 'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>Recuerda valorar el entrenamiento después del entreno.';
+    ? '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>¡Descansa bien! 💤'
+    : '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>Recuerda valorar el entrenamiento después del entreno.';
   var btnSRPE = document.getElementById('btn-valorar');
   if (btnSRPE) btnSRPE.style.display = diaDescanso ? 'none' : '';
   var txtSRPE = document.getElementById('txt-valorar');
