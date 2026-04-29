@@ -336,6 +336,7 @@ var srpeGymVal = 0;
 var srpeCampoVal = 0;
 var today = new Date().toISOString().substring(0,10);
 var diaDescanso = localStorage.getItem('gcf_descanso_' + new Date().toISOString().substring(0,10)) === '1';
+var diaPartido = localStorage.getItem('gcf_partido_' + new Date().toISOString().substring(0,10)) === '1';
 
 // ── KEY por jugadora usando NOMBRE (no email) ─────────
 // Esto garantiza que cada jugadora tenga su propio registro
@@ -412,6 +413,10 @@ function enterApp() {
         diaDescanso = true;
         localStorage.setItem('gcf_descanso_' + today, '1');
       }
+      if (d.diaPartido) {
+        diaPartido = true;
+        localStorage.setItem('gcf_partido_' + today, '1');
+      }
     } catch(e) {}
     _decidirPantalla();
   };
@@ -457,6 +462,8 @@ function goMode(mode) {
     var notice = document.getElementById('limit-notice');
     if (notice) notice.innerHTML = diaDescanso
       ? '🛌 Hoy es día de descanso. Completa el wellness para que el staff conozca tu estado.'
+      : diaPartido
+      ? '🏆 ¡Hoy hay partido! Completa el wellness <strong>antes del partido de hoy</strong>. El staff lo recibe al instante.'
       : '⏰ Completa este formulario <strong>antes del entrenamiento de hoy</strong>. El staff lo recibe al instante.';
   } else {
     if (localStorage.getItem('gcf_s_done_' + today + '_' + playerKey())) { showDoneSRPE(); return; }
@@ -471,11 +478,15 @@ function showDone() {
   document.getElementById('done-screen').classList.add('show');
   if (currentPlayer) document.getElementById('done-text').innerHTML = diaDescanso
     ? '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>¡Descansa bien! 💤'
+    : diaPartido
+    ? '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>¡Mucha fuerza en el partido! 🏆'
     : '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya rellenaste el wellness de hoy.<br>Recuerda valorar el entrenamiento después del entreno.';
   var btnSRPE = document.getElementById('btn-valorar');
   if (btnSRPE) btnSRPE.style.display = diaDescanso ? 'none' : '';
   var txtSRPE = document.getElementById('txt-valorar');
   if (txtSRPE) txtSRPE.style.display = diaDescanso ? 'none' : '';
+  var btnValorar = document.getElementById('btn-valorar');
+  if (btnValorar) btnValorar.textContent = diaPartido ? '🏆 Valorar el partido' : '💪 Valorar el entrenamiento';
   window.scrollTo(0,0);
 }
 
@@ -484,8 +495,9 @@ function showDoneSRPE() {
   document.getElementById('srpe-screen').style.display      = 'none';
   document.getElementById('done-screen').classList.remove('show');
   document.getElementById('done-srpe-screen').classList.add('show');
-  if (currentPlayer) document.getElementById('done-srpe-text').innerHTML =
-    'Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya valoraste el entrenamiento de hoy.';
+  if (currentPlayer) document.getElementById('done-srpe-text').innerHTML = diaPartido
+    ? '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya valoraste el partido de hoy. ¡Gran esfuerzo! 🏆'
+    : '¡Buen trabajo, <strong>' + currentPlayer.name.split(' ')[0] + '</strong>! Ya valoraste el entrenamiento de hoy.';
   window.scrollTo(0,0);
 }
 
@@ -580,7 +592,9 @@ function doneWellness() {
   document.getElementById('c-card-icon').textContent='📋';
   document.getElementById('c-card-title').textContent='Recibido por el staff';
   document.getElementById('c-card-sub').textContent='Prepararán la sesión según tu estado de hoy.';
-  document.getElementById('c-footer').textContent='Recuerda valorar el entrenamiento después del entreno.';
+  document.getElementById('c-footer').textContent = diaPartido
+    ? '¡Mucha fuerza hoy! Recuerda valorar el partido después. 🏆'
+    : 'Recuerda valorar el entrenamiento después del entreno.';
   window.scrollTo(0,0);
 }
 
@@ -619,7 +633,9 @@ function doneSRPE() {
   document.getElementById('c-card-icon').textContent='💤';
   document.getElementById('c-card-title').style.color='#1A1A1A';
   document.getElementById('c-card-title').textContent='';
-  document.getElementById('c-card-sub').textContent='Recuerda: momento de trabajo invisible. Descansa y recupérate bien.';
+  document.getElementById('c-card-sub').textContent = diaPartido
+    ? '¡Gran partido hoy! Ahora toca recuperar bien. 💪'
+    : 'Recuerda: momento de trabajo invisible. Descansa y recupérate bien.';
   document.getElementById('c-footer').textContent='';
   window.scrollTo(0,0);
 }
