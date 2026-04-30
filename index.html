@@ -337,6 +337,7 @@ var srpeCampoVal = 0;
 var today = new Date().toISOString().substring(0,10);
 var diaDescanso = localStorage.getItem('gcf_descanso_' + new Date().toISOString().substring(0,10)) === '1';
 var diaPartido = localStorage.getItem('gcf_partido_' + new Date().toISOString().substring(0,10)) === '1';
+var hayGym = localStorage.getItem('gcf_gym_' + new Date().toISOString().substring(0,10)) === '1';
 
 // ── KEY por jugadora usando NOMBRE (no email) ─────────
 // Esto garantiza que cada jugadora tenga su propio registro
@@ -417,6 +418,10 @@ function enterApp() {
         diaPartido = true;
         localStorage.setItem('gcf_partido_' + today, '1');
       }
+      if (d.hayGym) {
+        hayGym = true;
+        localStorage.setItem('gcf_gym_' + today, '1');
+      }
     } catch(e) {}
     _decidirPantalla();
   };
@@ -468,6 +473,8 @@ function goMode(mode) {
   } else {
     if (localStorage.getItem('gcf_s_done_' + today + '_' + playerKey())) { showDoneSRPE(); return; }
     document.getElementById('srpe-screen').style.display = 'block';
+    var bloqueGym = document.getElementById('srpe-gym-list');
+    if (bloqueGym) bloqueGym.closest('.block').style.display = (hayGym && !diaPartido) ? '' : 'none';
   }
   window.scrollTo(0,0);
 }
@@ -602,7 +609,8 @@ function doneWellness() {
 var sendingSRPE = false;
 function submitSRPE() {
   if (sendingSRPE) return;
-  if (!srpeGymVal) { toast('Selecciona el esfuerzo del gimnasio'); return; }
+  if (!hayGym || diaPartido) { srpeGymVal = 0; }
+  else if (!srpeGymVal) { toast('Selecciona el esfuerzo del gimnasio'); return; }
   if (!srpeCampoVal) { toast('Selecciona el esfuerzo del campo'); return; }
   if (!ans.smol) { toast('Indica si tuviste molestias'); return; }
   sendingSRPE = true;
